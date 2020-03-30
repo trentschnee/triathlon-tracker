@@ -3,6 +3,7 @@ import { View, } from 'react-native'
 import { getMetricMetaInfo } from '../utils/helpers'
 import Slider from './Slider'
 import Steppers from './Steppers'
+import DateHeader from './DateHeader'
 export default class AddEntry extends Component {
     // need to make three different methods to modify inputs
 
@@ -53,6 +54,7 @@ export default class AddEntry extends Component {
     render() {
         const metaInfo = getMetricMetaInfo()
         return (<View>
+            <DateHeader date = {(new Date()).toLocaleDateString()}/>
             {/* return array */}
             {Object.keys(metaInfo).map((key) => {
                 // Grab properties from key
