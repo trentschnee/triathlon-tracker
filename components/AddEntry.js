@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
-import { View, } from 'react-native'
-import { getMetricMetaInfo } from '../utils/helpers'
+import { View, TouchableOpacity, Text } from 'react-native'
+import { getMetricMetaInfo, timeToString } from '../utils/helpers'
 import Slider from './Slider'
 import Steppers from './Steppers'
 import DateHeader from './DateHeader'
+// Create submit button that takes in onpress
+function SubmitBtn ({onPress}){
+    return (
+        <TouchableOpacity onPress={onPress}>
+            <Text>Submit</Text>
+        </TouchableOpacity>
+    )
+}
 export default class AddEntry extends Component {
     // need to make three different methods to modify inputs
 
@@ -51,6 +59,27 @@ export default class AddEntry extends Component {
             [metric]: value
         }))
     }
+    submit = ()=>{
+        // Grab key for specific day
+        const key = timeToString()
+        // Grab everything from state
+        const entry = this.state
+        // Reset state back to 0
+        this.setState(()=>({
+            run: 0,
+            bike: 0,
+            swim: 0,
+            sleep: 0,
+            eat: 0
+        }))
+
+        // TODO: update redux
+
+        // Navigate to home
+        // Save to DB
+
+        // Clear local notification
+    }
     render() {
         const metaInfo = getMetricMetaInfo()
         return (<View>
@@ -83,6 +112,7 @@ export default class AddEntry extends Component {
                     </View>
                 )
             })}
+            <SubmitBtn onPress={this.submit}/>
         </View>)
     }
 }
