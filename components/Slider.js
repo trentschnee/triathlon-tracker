@@ -9,5 +9,9 @@ export default function TriSlider({max,unit,step,value,onChange}){
         minimumValue={0}
         onValueChange={onChange}
         />
+        <View>
+            <Text>{value}</Text>
+            <Text>{unit}</Text>
+        </View>
     </View>)
 }

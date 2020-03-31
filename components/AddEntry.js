@@ -43,6 +43,7 @@ export default class AddEntry extends Component {
     }
     decrement = (metric) => {
         //  Then call setState to update our local component state.
+        const { step } = getMetricMetaInfo(metric);
         this.setState((state) => {
             const count = state[metric] - step
             return {
