@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { white } from './colors'
+import { white,black } from './colors'
 export function isBetween (num, x, y) {
     if (num >= x && num <= y) {
       return true
@@ -57,7 +57,7 @@ export function isBetween (num, x, y) {
             <View>
               <MaterialIcons
                 name='directions-run'
-                color={white}
+                color={black}
                 size={35}
               />
             </View>
@@ -75,7 +75,7 @@ export function isBetween (num, x, y) {
             <View>
               <MaterialCommunityIcons
                 name='bike'
-                color={white}
+                color={black}
                 size={32}
               />
             </View>
@@ -93,7 +93,7 @@ export function isBetween (num, x, y) {
             <View>
               <MaterialCommunityIcons
                 name='swim'
-                color={white}
+                color={black}
                 size={35}
               />
             </View>
@@ -111,7 +111,7 @@ export function isBetween (num, x, y) {
             <View>
               <FontAwesome
                 name='bed'
-                color={white}
+                color={black}
                 size={30}
               />
             </View>
@@ -129,7 +129,7 @@ export function isBetween (num, x, y) {
             <View>
               <MaterialCommunityIcons
                 name='food'
-                color={white}
+                color={black}
                 size={35}
               />
             </View>
