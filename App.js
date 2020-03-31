@@ -4,7 +4,7 @@ import AddEntry from './components/AddEntry'
 
 export default function App() {
   return (
-    <View >
+    <View>
      <AddEntry/>
     </View>
   );

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
-import Slider from './Slider'
-import Steppers from './Steppers'
+import TriSlider from './Slider'
+import TriStepper from './Steppers'
 import DateHeader from './DateHeader'
 // Create submit button that takes in onpress
 function SubmitBtn ({onPress}){
@@ -97,13 +97,13 @@ export default class AddEntry extends Component {
                         {
                             // If type = slider, then render slider. Pass it the value and onChange function
                         type === 'slider'
-                            ? <Slider
+                            ? <TriSlider
                                 value={value}
                                 onChange={(value) => this.slide(key, value)}
                                 {...rest}
                             />
                             // If type = stepper, this render the stepper. Pass it the value,onIncrement, and onDecrement
-                            : <Steppers
+                            : <TriStepper
                                 value={value}
                                 onIncrement={() => this.increment(key)}
                                 onDecrement={() => this.decrement(key)}

@@ -1,7 +1,13 @@
 import React from 'react'
-import {View, Text} from 'react-native'
-export default function Slider(){
+import {View, Slider,Text} from 'react-native'
+export default function TriSlider({max,unit,step,value,onChange}){
     return(<View>
-        <Text>Slider</Text>
+        <Slider
+        step={step}
+        value={value}
+        maximumValue={max}
+        minimumValue={0}
+        onValueChange={onChange}
+        />
     </View>)
 }
