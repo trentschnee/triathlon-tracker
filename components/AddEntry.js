@@ -9,6 +9,7 @@ import TextButton from './TextButton'
 import {submitEntry, removeEntry} from '../utils/api'
 import {connect} from 'react-redux'
 import {addEntry} from '../actions'
+import {getDailyReminderValue} from '../utils/helpers'
 // Create submit button that takes in onpress
 function SubmitBtn({ onPress }) {
     return (
@@ -17,7 +18,7 @@ function SubmitBtn({ onPress }) {
         </TouchableOpacity>
     )
 }
-export default class AddEntry extends Component {
+class AddEntry extends Component {
     // need to make three different methods to modify inputs
 
     state = {
@@ -78,7 +79,11 @@ export default class AddEntry extends Component {
             sleep: 0,
             eat: 0
         }))
-
+this.props.dispatch(addEntry(
+    {
+        [key]: entry
+    }
+))
         // TODO: update redux
 
         // Navigate to home
@@ -87,14 +92,18 @@ export default class AddEntry extends Component {
     }
     reset = () => {
         const key = timeToString()
-        // Update Redux
+    this.props.dispatch(addEntry(
+        {
+    [key]:getDailyReminderValue()
+        }
+    ))
         // Route to Home
        removeEntry(key)
     }
     render() {
        
         const metaInfo = getMetricMetaInfo();
-        if (true) {
+        if (this.props.alreadyLogged) {
             return (
               <View >
                 <Ionicons
@@ -142,3 +151,12 @@ export default class AddEntry extends Component {
         </View>)
     }
 }
+function mapStateToProps (state) {
+    const key = timeToString()
+  
+    return {
+      alreadyLogged: state[key] && typeof state[key].today === 'undefined'
+    }
+}
+// Export the invocation of connect and the result of that we will pass addEntry. It will then have access to addDispatch
+export default connect(mapStateToProps)(AddEntry)

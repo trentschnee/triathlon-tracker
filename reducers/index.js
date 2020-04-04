@@ -18,3 +18,4 @@ function entries(state = {}, action) {
 
     }
 }
+export default entries
