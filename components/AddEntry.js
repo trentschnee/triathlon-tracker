@@ -7,6 +7,8 @@ import DateHeader from './DateHeader'
 import { Ionicons } from '@expo/vector-icons'
 import TextButton from './TextButton'
 import {submitEntry, removeEntry} from '../utils/api'
+import {connect} from 'react-redux'
+import {addEntry} from '../actions'
 // Create submit button that takes in onpress
 function SubmitBtn({ onPress }) {
     return (
