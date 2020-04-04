@@ -4,8 +4,10 @@ import { getMetricMetaInfo, timeToString } from '../utils/helpers'
 import TriSlider from './Slider'
 import TriStepper from './Steppers'
 import DateHeader from './DateHeader'
+import { Ionicons } from '@expo/vector-icons'
+import TextButton from './TextButton'
 // Create submit button that takes in onpress
-function SubmitBtn ({onPress}){
+function SubmitBtn({ onPress }) {
     return (
         <TouchableOpacity onPress={onPress}>
             <Text>Submit</Text>
@@ -60,13 +62,13 @@ export default class AddEntry extends Component {
             [metric]: value
         }))
     }
-    submit = ()=>{
+    submit = () => {
         // Grab key for specific day
         const key = timeToString()
         // Grab everything from state
         const entry = this.state
         // Reset state back to 0
-        this.setState(()=>({
+        this.setState(() => ({
             run: 0,
             bike: 0,
             swim: 0,
@@ -81,10 +83,31 @@ export default class AddEntry extends Component {
 
         // Clear local notification
     }
+    reset = () => {
+        const key = timeToString()
+        // Update Redux
+        // Route to Home
+        // Update DB
+    }
     render() {
-        const metaInfo = getMetricMetaInfo()
+       
+        const metaInfo = getMetricMetaInfo();
+        if (true) {
+            return (
+              <View >
+                <Ionicons
+                  name='ios-happy-outline'
+                  size={100}
+                />
+                <Text>You already logged your information for today.</Text>
+                <TextButton style={{padding: 10}} onPress={this.reset}>
+                  Reset
+                </TextButton>
+              </View>
+            )
+          }
         return (<View>
-            <DateHeader date = {(new Date()).toLocaleDateString()}/>
+            <DateHeader date={(new Date()).toLocaleDateString()} />
             {/* return array */}
             {Object.keys(metaInfo).map((key) => {
                 // Grab properties from key
@@ -94,26 +117,26 @@ export default class AddEntry extends Component {
                 return (
                     <View key={key}>
                         {getIcon()}
-                        
+
                         {
                             // If type = slider, then render slider. Pass it the value and onChange function
-                        type === 'slider'
-                            ? <TriSlider
-                                value={value}
-                                onChange={(value) => this.slide(key, value)}
-                                {...rest}
-                            />
-                            // If type = stepper, this render the stepper. Pass it the value,onIncrement, and onDecrement
-                            : <TriStepper
-                                value={value}
-                                onIncrement={() => this.increment(key)}
-                                onDecrement={() => this.decrement(key)}
-                                {...rest}
-                            />}
+                            type === 'slider'
+                                ? <TriSlider
+                                    value={value}
+                                    onChange={(value) => this.slide(key, value)}
+                                    {...rest}
+                                />
+                                // If type = stepper, this render the stepper. Pass it the value,onIncrement, and onDecrement
+                                : <TriStepper
+                                    value={value}
+                                    onIncrement={() => this.increment(key)}
+                                    onDecrement={() => this.decrement(key)}
+                                    {...rest}
+                                />}
                     </View>
                 )
             })}
-            <SubmitBtn onPress={this.submit}/>
+            <SubmitBtn onPress={this.submit} />
         </View>)
     }
 }
