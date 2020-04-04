@@ -6,6 +6,7 @@ import TriStepper from './Steppers'
 import DateHeader from './DateHeader'
 import { Ionicons } from '@expo/vector-icons'
 import TextButton from './TextButton'
+import {submitEntry, removeEntry} from '../utils/api'
 // Create submit button that takes in onpress
 function SubmitBtn({ onPress }) {
     return (
@@ -79,15 +80,14 @@ export default class AddEntry extends Component {
         // TODO: update redux
 
         // Navigate to home
-        // Save to DB
-
+   submitEntry({key,entry})
         // Clear local notification
     }
     reset = () => {
         const key = timeToString()
         // Update Redux
         // Route to Home
-        // Update DB
+       removeEntry(key)
     }
     render() {
        
