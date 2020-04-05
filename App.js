@@ -4,6 +4,7 @@ import AddEntry from './components/AddEntry'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import reducer from './reducers'
+import History from './components/History'
 export default function App() {
   return (
     
@@ -12,6 +13,7 @@ export default function App() {
       We want the view component to take up all available space so that the child components can expand the full size of the phone.
       */}
     <View style={{flex:1}}>
+      <History/>
      <AddEntry/>
     </View>
     </Provider>
