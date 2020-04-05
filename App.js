@@ -8,7 +8,10 @@ export default function App() {
   return (
     
     <Provider store={createStore(reducer)}>
-    <View>
+      {/* Stylization:
+      We want the view component to take up all available space so that the child components can expand the full size of the phone.
+      */}
+    <View style={{flex:1}}>
      <AddEntry/>
     </View>
     </Provider>

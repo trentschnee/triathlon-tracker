@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text } from 'react-native'
+import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native'
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
 import TriSlider from './Slider'
 import TriStepper from './Steppers'
 import DateHeader from './DateHeader'
 import { Ionicons } from '@expo/vector-icons'
 import TextButton from './TextButton'
-import {submitEntry, removeEntry} from '../utils/api'
-import {connect} from 'react-redux'
-import {addEntry} from '../actions'
-import {getDailyReminderValue} from '../utils/helpers'
+import { submitEntry, removeEntry } from '../utils/api'
+import { connect } from 'react-redux'
+import { addEntry } from '../actions'
+import { getDailyReminderValue } from '../utils/helpers'
+import { white, purple } from '../utils/colors'
 // Create submit button that takes in onpress
 function SubmitBtn({ onPress }) {
     return (
-        <TouchableOpacity onPress={onPress}>
-            <Text>Submit</Text>
+        <TouchableOpacity onPress={onPress} style={Platform.os === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}>
+            <Text style={styles.submitBtnText}>Submit</Text>
         </TouchableOpacity>
     )
 }
@@ -79,45 +80,45 @@ class AddEntry extends Component {
             sleep: 0,
             eat: 0
         }))
-this.props.dispatch(addEntry(
-    {
-        [key]: entry
-    }
-))
+        this.props.dispatch(addEntry(
+            {
+                [key]: entry
+            }
+        ))
         // TODO: update redux
 
         // Navigate to home
-   submitEntry({key,entry})
+        submitEntry({ key, entry })
         // Clear local notification
     }
     reset = () => {
         const key = timeToString()
-    this.props.dispatch(addEntry(
-        {
-    [key]:getDailyReminderValue()
-        }
-    ))
+        this.props.dispatch(addEntry(
+            {
+                [key]: getDailyReminderValue()
+            }
+        ))
         // Route to Home
-       removeEntry(key)
+        removeEntry(key)
     }
     render() {
-       
+
         const metaInfo = getMetricMetaInfo();
         if (this.props.alreadyLogged) {
             return (
-              <View >
-                <Ionicons
-                  name='ios-happy-outline'
-                  size={100}
-                />
-                <Text>You already logged your information for today.</Text>
-                <TextButton style={{padding: 10}} onPress={this.reset}>
-                  Reset
+                <View style={styles.center} >
+                    <Ionicons
+                        name={Platform.OS === 'ios' ? 'ios-happy-outline' : 'md-happy'}
+                        size={100}
+                    />
+                    <Text>You already logged your information for today.</Text>
+                    <TextButton style={{ padding: 10 }} style={{padding:10}} onPress={this.reset}>
+                        Reset
                 </TextButton>
-              </View>
+                </View>
             )
-          }
-        return (<View>
+        }
+        return (<View style={styles.container}>
             <DateHeader date={(new Date()).toLocaleDateString()} />
             {/* return array */}
             {Object.keys(metaInfo).map((key) => {
@@ -126,7 +127,7 @@ this.props.dispatch(addEntry(
                 // Grab value from run
                 const value = this.state[key]
                 return (
-                    <View key={key}>
+                    <View key={key} style={styles.row}>
                         {getIcon()}
 
                         {
@@ -151,11 +152,53 @@ this.props.dispatch(addEntry(
         </View>)
     }
 }
-function mapStateToProps (state) {
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: white
+    },
+    row: {
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center',
+    },
+    iosSubmitBtn: {
+        backgroundColor: purple,
+        padding: 10,
+        borderRadius: 7,
+        height: 45,
+        marginLeft: 40,
+        marginRight: 40
+    },
+    androidSubmitBtn: {
+        backgroundColor: purple,
+        padding: 10,
+        paddingLeft: 30,
+        paddingRight: 30,
+        height: 45,
+        borderRadius: 2,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    submitBtnText: {
+        color: white,
+        fontSize: 22,
+        textAlign: 'center'
+    },
+    center:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight : 30,
+        marginLeft: 30
+    }
+})
+function mapStateToProps(state) {
     const key = timeToString()
-  
+
     return {
-      alreadyLogged: state[key] && typeof state[key].today === 'undefined'
+        alreadyLogged: state[key] && typeof state[key].today === 'undefined'
     }
 }
 // Export the invocation of connect and the result of that we will pass addEntry. It will then have access to addDispatch
